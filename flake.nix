@@ -2,7 +2,7 @@
   description = "An over-engineered Hello World in C";
 
   # Nixpkgs / NixOS version to use.
-  inputs.nixpkgs.url = "nixpkgs/nixos-25.05";
+  inputs.nixpkgs.url = "nixpkgs/nixos-24.11";
 
   outputs = { self, nixpkgs }:
     let
@@ -29,13 +29,15 @@
       # A Nixpkgs overlay.
       overlay = final: prev: {
 
-        hello = with final; stdenv.mkDerivation rec {
+        control_modules = with final; stdenv.mkDerivation rec {
           pname = "control_modules";
           inherit version;
 
           src = ./.;
 
           nativeBuildInputs = [ autoreconfHook ];
+
+          buildInputs = [ autoconf-archive ];
         };
 
       };
